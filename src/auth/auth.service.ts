@@ -18,12 +18,9 @@ export class AuthService {
   async signUp(data: SignUpDto): Promise<Omit<User, "password">> {
     const hash = await bcrypt.hash(data.password, 10);
 
-    const newUser = await this.userService.create({
-      ...data,
-      password: hash,
-    });
-
+    const newUser = await this.userService.create({ ...data, password: hash });
     const { password, ...user } = newUser;
+
     return user;
   }
 
