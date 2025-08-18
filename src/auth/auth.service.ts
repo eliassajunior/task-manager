@@ -30,8 +30,12 @@ export class AuthService {
     if (isUserValid) throw new ConflictException("E-mail unavailable.");
 
     const hash = await bcrypt.hash(data.password, 10);
-
-    const newUser = await this.prismaService.user.create({ data: { ...data, password: hash } });
+    const newUser = await this.prismaService.user.create({
+      data: {
+        ...data,
+        password: hash,
+      },
+    });
 
     const { password, ...result } = newUser;
     return result;
